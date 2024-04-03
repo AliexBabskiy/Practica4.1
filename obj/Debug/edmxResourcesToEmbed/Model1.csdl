@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BdPracticaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="ID_Client" />
+    </Key>
+    <Property Name="ID_Client" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="ConnectId" Relationship="Self.FK__ConnectId__Clien__3F466844" FromRole="Client" ToRole="ConnectId" />
+  </EntityType>
+  <EntityType Name="Coffee">
+    <Key>
+      <PropertyRef Name="ID_Coffee" />
+    </Key>
+    <Property Name="ID_Coffee" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Coffee_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Coffee_Price" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ConnectId" Relationship="Self.FK__ConnectId__Coffe__403A8C7D" FromRole="Coffee" ToRole="ConnectId" />
+  </EntityType>
+  <EntityType Name="ConnectId">
+    <Key>
+      <PropertyRef Name="ID_ConnectId" />
+    </Key>
+    <Property Name="ID_ConnectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EMP_ID" Type="Int32" />
+    <Property Name="Clients_ID" Type="Int32" />
+    <Property Name="Coffee_ID" Type="Int32" />
+    <NavigationProperty Name="Client" Relationship="Self.FK__ConnectId__Clien__3F466844" FromRole="ConnectId" ToRole="Client" />
+    <NavigationProperty Name="Coffee" Relationship="Self.FK__ConnectId__Coffe__403A8C7D" FromRole="ConnectId" ToRole="Coffee" />
+    <NavigationProperty Name="EMP" Relationship="Self.FK__ConnectId__EMP_I__3E52440B" FromRole="ConnectId" ToRole="EMP" />
+  </EntityType>
+  <EntityType Name="EMP">
+    <Key>
+      <PropertyRef Name="ID_EMP" />
+    </Key>
+    <Property Name="ID_EMP" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SURNAME" Type="String" MaxLength="80" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FIRST_NAME" Type="String" MaxLength="80" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MIDDLENAME" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ConnectId" Relationship="Self.FK__ConnectId__EMP_I__3E52440B" FromRole="EMP" ToRole="ConnectId" />
+  </EntityType>
+  <Association Name="FK__ConnectId__Clien__3F466844">
+    <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+    <End Role="ConnectId" Type="Self.ConnectId" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="ID_Client" />
+      </Principal>
+      <Dependent Role="ConnectId">
+        <PropertyRef Name="Clients_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ConnectId__Coffe__403A8C7D">
+    <End Role="Coffee" Type="Self.Coffee" Multiplicity="0..1" />
+    <End Role="ConnectId" Type="Self.ConnectId" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Coffee">
+        <PropertyRef Name="ID_Coffee" />
+      </Principal>
+      <Dependent Role="ConnectId">
+        <PropertyRef Name="Coffee_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ConnectId__EMP_I__3E52440B">
+    <End Role="EMP" Type="Self.EMP" Multiplicity="0..1" />
+    <End Role="ConnectId" Type="Self.ConnectId" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMP">
+        <PropertyRef Name="ID_EMP" />
+      </Principal>
+      <Dependent Role="ConnectId">
+        <PropertyRef Name="EMP_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BdPracticaEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Client" EntityType="Self.Client" />
+    <EntitySet Name="Coffee" EntityType="Self.Coffee" />
+    <EntitySet Name="ConnectId" EntityType="Self.ConnectId" />
+    <EntitySet Name="EMP" EntityType="Self.EMP" />
+    <AssociationSet Name="FK__ConnectId__Clien__3F466844" Association="Self.FK__ConnectId__Clien__3F466844">
+      <End Role="Client" EntitySet="Client" />
+      <End Role="ConnectId" EntitySet="ConnectId" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ConnectId__Coffe__403A8C7D" Association="Self.FK__ConnectId__Coffe__403A8C7D">
+      <End Role="Coffee" EntitySet="Coffee" />
+      <End Role="ConnectId" EntitySet="ConnectId" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ConnectId__EMP_I__3E52440B" Association="Self.FK__ConnectId__EMP_I__3E52440B">
+      <End Role="EMP" EntitySet="EMP" />
+      <End Role="ConnectId" EntitySet="ConnectId" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
